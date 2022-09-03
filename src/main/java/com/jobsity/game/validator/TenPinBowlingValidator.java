@@ -13,29 +13,24 @@ public class TenPinBowlingValidator implements BowlingValidator {
     @Override
     public void validateMatch(Map<String, List<FrameResult>> matchResultMap) {
         matchResultMap.forEach((player,results) -> {
-            int size = results.stream()
-                    .flatMap(fr -> fr.getPinsKnockedDown().stream())
-                    .collect(Collectors.toList()).size();
-            if(isMoreThanTwelveMatches(results) && isPerfectMatch(results)) {
-                throw new InvalidBowlingInputException("Player " +player+ " played a perfect match but also "
+            if (isMoreThanTwelveMatches(results) && isPerfectMatch(results)) {
+                throw new InvalidBowlingInputException("Player " + player + " played a perfect match but also "
                         + "exceeded matches limit");
             }
         });
     }
 
     private boolean isMoreThanTwelveMatches(List<FrameResult> results) {
-        boolean moreThanTwelveMatches = results.stream()
+        return results.stream()
                 .flatMap(fr -> fr.getPinsKnockedDown().stream())
-                .collect(Collectors.toList()).size() > 12;
-        return moreThanTwelveMatches;
+                .count() > 12;
     }
 
     private boolean isPerfectMatch(List<FrameResult> results) {
-        boolean isPerfectMatch = results
+        return results
                 .stream()
                 .flatMap(r -> r.getPinsKnockedDown().stream())
                 .map(BowlingResultRepresentationEnum::scoreFromPinsKnockedDown)
-                .allMatch(match-> match == 10);
-        return isPerfectMatch;
+                .allMatch(match -> match == 10);
     }
 }

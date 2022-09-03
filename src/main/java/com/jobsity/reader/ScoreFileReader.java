@@ -7,9 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ScoreFileReader extends FileReader {
@@ -22,9 +21,12 @@ public class ScoreFileReader extends FileReader {
     }
 
     public static List<ScoreLine> readFileAndParseResults(String filePath) {
-        Objects.requireNonNull(filePath, "Score file path is require to execute the program..");
         try {
-            List<ScoreLine> scoreList = Files.lines(Paths.get(filePath))
+            Path path = Path.of(filePath);
+            if (!Files.isReadable(path)) {
+                throw new InvalidFileException("File: "+ filePath + " not found..");
+            }
+            List<ScoreLine> scoreList = Files.lines(path)
                     .map(ScoreLine::new)
                     .collect(Collectors.toList());
             if(scoreList.isEmpty()) {
