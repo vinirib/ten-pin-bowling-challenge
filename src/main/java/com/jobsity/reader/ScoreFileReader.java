@@ -1,6 +1,7 @@
 package com.jobsity.reader;
 
 import com.jobsity.dto.ScoreLine;
+import com.jobsity.exception.InvalidFileException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 
 public class ScoreFileReader extends FileReader {
 
+    public static final String FILE_DOES_NOT_REPRESENT_BOWLING_SCORE = "Your file does not represent a valid Bowling "
+            + "Score";
+
     public ScoreFileReader(String fileName) throws FileNotFoundException {
         super(fileName);
     }
@@ -23,6 +27,9 @@ public class ScoreFileReader extends FileReader {
             List<ScoreLine> scoreList = Files.lines(Paths.get(filePath))
                     .map(ScoreLine::new)
                     .collect(Collectors.toList());
+            if(scoreList.isEmpty()) {
+                throw new InvalidFileException(FILE_DOES_NOT_REPRESENT_BOWLING_SCORE);
+            }
             return scoreList;
 
         } catch (IOException e) {
