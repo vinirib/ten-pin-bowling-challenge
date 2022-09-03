@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BowlingResult {
     void matchBowlingResult(List<FrameResult> frameResultList);
+
 }

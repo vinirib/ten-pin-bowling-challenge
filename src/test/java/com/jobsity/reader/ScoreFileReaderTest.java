@@ -21,7 +21,8 @@ class ScoreFileReaderTest {
 
     private static final String INVALID_MATCH_RESULT_MESSAGE = "Result value lorem is invalid";
     private static final String NEGATIVE_MATCH_RESULT_MESSAGE = "Less than zero pins knocked down was passed: -5";
-    private static final String OVER_THAN_TEN_MATCH_RESULT_MESSAGE = "More than ten pins knocked down was passed: 22";
+    private static final String OVER_THAN_TEN_PINFALLS_RESULT_MESSAGE = "More than ten pins knocked down was passed: 22";
+    private static final String OVER_THAN_TEN_FRAMES_RESULT_MESSAGE = "Player Jeff played more than ten frames";
 
 
     @Test
@@ -59,11 +60,19 @@ class ScoreFileReaderTest {
     }
 
     @Test
-    void read_file_over_than_ten_value_in_match_result_should_throw_invalid_bowling_input_exception() {
-        String uri = getFile("./positive/over-than-ten.txt");
+    void read_file_over_than_ten_value_in_pinfall_result_should_throw_invalid_bowling_input_exception() {
+        String uri = getFile("positive/over-than-ten-pinfall.txt");
         Assertions.assertThrows(InvalidBowlingInputException.class, () -> ScoreFileReader.readFileAndParseResults(uri),
-                OVER_THAN_TEN_MATCH_RESULT_MESSAGE);
+                OVER_THAN_TEN_PINFALLS_RESULT_MESSAGE);
     }
+    //TODO test over than ten frames
+    @Test
+    void read_file_over_than_ten_frames_should_throw_invalid_bowling_input_exception() {
+        String uri = getFile("positive/over-than-ten-frames.txt");
+        Assertions.assertThrows(InvalidBowlingInputException.class, () -> ScoreFileReader.readFileAndParseResults(uri),
+                OVER_THAN_TEN_FRAMES_RESULT_MESSAGE);
+    }
+
 
     @Test
     void read_perfect_match_file() {

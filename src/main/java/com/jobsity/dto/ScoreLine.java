@@ -30,7 +30,8 @@ public class ScoreLine implements Serializable {
 
     private void validateLine(String line, String[] flatLine) {
         if (flatLine.length != 2 ) {
-            throw new InvalidScoreLineException("Invalid line detected.." + line);
+            throw new InvalidScoreLineException("Invalid line detected.." + line+ " bowling line should has two values"
+                    + " and tab separated");
         }
         BowlingResultRepresentationEnum.scoreFromPinsKnockedDown(flatLine[1]);
     }

@@ -3,8 +3,11 @@ package com.jobsity.game;
 import com.jobsity.dto.BowlingResultRepresentationEnum;
 import com.jobsity.dto.FrameResult;
 import com.jobsity.dto.ScoreLine;
+import com.jobsity.exception.InvalidBowlingInputException;
 import com.jobsity.game.result.BowlingResult;
 import com.jobsity.game.result.TenPinBowlingResult;
+import com.jobsity.game.validator.BowlingValidator;
+import com.jobsity.game.validator.TenPinBowlingValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,9 +19,11 @@ public class TenPinBowlingGame implements BowlingGame {
 
     private static final int DEFAULT_FRAMES_QUANTITY = 10;
     private final BowlingResult tenPinBowlingResult;
+    private final BowlingValidator tenPinBowlingValidator;
 
     public TenPinBowlingGame() {
         this.tenPinBowlingResult = new TenPinBowlingResult();
+        this.tenPinBowlingValidator = new TenPinBowlingValidator();
     }
 
     @Override
@@ -35,6 +40,10 @@ public class TenPinBowlingGame implements BowlingGame {
                     List<String> tempPinsKnockedDown = new ArrayList<>();
 
                     for (ScoreLine scoreLine : match.getValue()) {
+                        if (frameNumber > DEFAULT_FRAMES_QUANTITY) {
+                            throw new InvalidBowlingInputException("Player "+match.getKey()+ " played more than ten"
+                                    + " frames");
+                        }
                         String pinsKnockedDown = scoreLine.getPinsKnockedDown();
                         int matchValue = BowlingResultRepresentationEnum.scoreFromPinsKnockedDown(pinsKnockedDown);
                         tempPinsKnockedDown.add(pinsKnockedDown);
@@ -60,9 +69,11 @@ public class TenPinBowlingGame implements BowlingGame {
                     resultMap.putAll(frameResultList);
                     return resultMap;
                 });
-        matchResultMap.forEach((e, f) -> tenPinBowlingResult.matchBowlingResult(f));
+        tenPinBowlingValidator.validateMatch(matchResultMap);
+        matchResultMap.forEach((player, results) -> tenPinBowlingResult.matchBowlingResult(results));
         return matchResultMap;
     }
+
 
     private boolean isMatchEnded(int tempScore, int matchNumbers, int matchValue, int frameNumber) {
         boolean isLastTurn = frameNumber == DEFAULT_FRAMES_QUANTITY;
