@@ -1,8 +1,9 @@
 package com.jobsity.writer;
 
-import com.jobsity.dto.ScoreLine;
+import com.jobsity.dto.FrameResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ConsoleScoreWriter implements ScoreWriter {
@@ -10,7 +11,7 @@ public class ConsoleScoreWriter implements ScoreWriter {
     private static final String HEADER = buildHeader();
 
     @Override
-    public void writeResult(List<ScoreLine> scoreLines) {
+    public void writeResult(Map<String, List<FrameResult>> tenPinBowlingGameResultMap) {
 
     }
 

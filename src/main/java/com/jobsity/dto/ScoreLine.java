@@ -6,8 +6,9 @@ import java.io.Serializable;
 import java.util.Optional;
 
 public class ScoreLine implements Serializable {
+    private static final String DATA_SEPARATOR = " ";
     private String player;
-    private String score;
+    private String pinsKnockedDown;
 
     private ScoreLine(){}
 
@@ -16,15 +17,15 @@ public class ScoreLine implements Serializable {
     }
 
     private void parseLineToAttributes(String line) {
-        String[] flatLine = line.split(" ");
+        String[] flatLine = line.split(DATA_SEPARATOR);
         player = Optional.ofNullable(flatLine[0]).orElseThrow(() -> new InvalidScoreLineException("Score line must contain" +
                 "Player and score number.. Player name is missing"));
-        score = Optional.ofNullable(flatLine[1]).orElseThrow(() -> new InvalidScoreLineException("Score line must contain" +
+        pinsKnockedDown = Optional.ofNullable(flatLine[1]).orElseThrow(() -> new InvalidScoreLineException("Score line must contain" +
                 "Player and score number.. Score value is missing"));
     }
 
-    public String getScore() {
-        return score;
+    public String getPinsKnockedDown() {
+        return pinsKnockedDown;
     }
 
     public String getPlayer() {
