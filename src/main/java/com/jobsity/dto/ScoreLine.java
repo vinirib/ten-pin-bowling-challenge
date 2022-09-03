@@ -10,18 +10,21 @@ public class ScoreLine implements Serializable {
     private String player;
     private String pinsKnockedDown;
 
-    private ScoreLine(){}
+    private ScoreLine() {
+    }
 
-    public ScoreLine(String line){
+    public ScoreLine(String line) {
         parseLineToAttributes(line);
     }
 
     private void parseLineToAttributes(String line) {
         String[] flatLine = line.split(DATA_SEPARATOR);
-        player = Optional.ofNullable(flatLine[0]).orElseThrow(() -> new InvalidScoreLineException("Score line must contain" +
-                "Player and score number.. Player name is missing"));
-        pinsKnockedDown = Optional.ofNullable(flatLine[1]).orElseThrow(() -> new InvalidScoreLineException("Score line must contain" +
-                "Player and score number.. Score value is missing"));
+        player = Optional.ofNullable(flatLine[0]).orElseThrow(() ->
+                new InvalidScoreLineException("Score line must contain Player and score number.. "
+                        + "Player name is missing"));
+        pinsKnockedDown = Optional.ofNullable(flatLine[1]).orElseThrow(() ->
+                new InvalidScoreLineException("Score line must contain Player and score number.. "
+                        + "Score value is missing"));
     }
 
     public String getPinsKnockedDown() {

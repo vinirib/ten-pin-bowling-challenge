@@ -30,10 +30,29 @@ public class FrameResult {
                         || p.equals(String.valueOf(BowlingResultRepresentationEnum.STRIKE.getValue())));
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
     public int getScore() {
         return score;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public Integer getAccumulativeScore() {
+        return accumulativeScore;
+    }
+
+    public void setAccumulativeScore(Integer accumulativeScore) {
+        this.accumulativeScore = accumulativeScore;
+    }
+
+    public List<String> getPinsKnockedDown() {
+        return pinsKnockedDown;
+    }
 
     public static final class FrameResultBuilder {
         private int number;

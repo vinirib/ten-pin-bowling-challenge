@@ -5,8 +5,8 @@ import com.jobsity.dto.ScoreLine;
 import com.jobsity.game.BowlingGame;
 import com.jobsity.game.TenPinBowlingGame;
 import com.jobsity.reader.ScoreFileReader;
-import com.jobsity.writer.ConsoleScoreWriter;
 import com.jobsity.writer.ScoreWriter;
+import com.jobsity.writer.TenPinBowlingConsoleWriter;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class Main {
         BowlingGame tenPinBowlingGame = new TenPinBowlingGame();
         Map<String, List<FrameResult>> tenPinBowlingGameResultMap = tenPinBowlingGame
                 .receiveScoreLinesAndMatchResult(scoreLines);
-        ScoreWriter consoleScoreWriter = new ConsoleScoreWriter();
+        ScoreWriter consoleScoreWriter = new TenPinBowlingConsoleWriter();
         consoleScoreWriter.writeResult(tenPinBowlingGameResultMap);
     }
 }

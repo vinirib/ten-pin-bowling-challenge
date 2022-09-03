@@ -10,21 +10,19 @@ public enum BowlingResultRepresentationEnum {
     INVALID(null, -1);
 
     private final String representation;
+    private final int value;
 
     BowlingResultRepresentationEnum(String representation, int value) {
         this.representation = representation;
         this.value = value;
     }
 
-    private int value;
-
     public static int scoreFromPinsKnockedDown(String pinsKnockedDown) {
-        var score = 0;
+        int score;
         try {
             score = Integer.parseInt(pinsKnockedDown);
         } catch (NumberFormatException e) {
-            score = Arrays.asList(BowlingResultRepresentationEnum.values())
-                    .stream()
+            score = Arrays.stream(BowlingResultRepresentationEnum.values())
                     .filter(s -> s.representation.equals(pinsKnockedDown))
                     .findFirst()
                     .orElse(INVALID)
