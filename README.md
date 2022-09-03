@@ -27,6 +27,21 @@ The columns in each row are tab-separated.
  - Integration test: At least cover the three main cases: Sample input (2 players), perfect score, zero score
    - Covered
 
+#### Scenarios covered
+   - Good scenarios
+     - Normal Ten Bowling Game result. `File:/resources/positive/scores.txt`
+     - Perfect Match with all Strikes. `File:/resources/positive/perfect.txt`
+   - Bad scenarios
+     - No file path passed in the execution. `Execute jar without passing parameter`
+     - Non-existing file passed in the execution. `Execute jar passing a wrong path`
+     - Pinfall more than 10. `File:/resources/positive/over-than-ten-pinfall.txt`
+     - Player playing more than ten frames. `File:/resources/positive/over-than-ten-frames.txt`
+     - File exists but with empty content. `File:/resources/negative/empty.txt`
+     - Perfect Match with extra score. `File:/resources/negative/extra-score.txt`
+     - File with no valid content. `File:/resources/negative/free-text.txt`
+     - Pinfall with invalid text in the pinfall. `File:/resources/negative/invalid-score.txt`
+     - Pinfall with negative pinfall value. `File:/resources/negative/negative.txt`
+
 #### Components used
    - Java 11+
    - Maven
